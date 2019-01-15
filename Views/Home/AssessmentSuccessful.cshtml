@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Assessment Successful";
+    Layout = "~/Views/Shared/_LandingPage.cshtml";
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="header text-success text-center">Assessment Successful!</h2>
+        <p class="lead text-center">
+            Thank you for participating.
+        </p>
+    </div>
+</div>
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/toastr")
+    <script>
+        var config = {
+            contextPath: @Url.Content("~")};
+        window.setTimeout(function () {
+            window.location.href = config.contextPath + 'Home/@ViewBag.ReturnUrl';
+        }, 10000);
+        $(function () {
+            toastr.options = {
+                "showDuration": "300",
+                "hideDuration": "10000",
+                "progressBar": true,
+                "extendedTimeOut": "5000",
+            }
+            toastr.info('','You are now being redirected to the assessment landing page...', { timeOut: 10000 });
+        });
+    </script>
+
+}

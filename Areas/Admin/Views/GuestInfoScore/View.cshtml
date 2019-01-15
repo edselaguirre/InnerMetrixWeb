@@ -1,0 +1,106 @@
+﻿@model InnerMetrixWeb.Areas.Admin.Models.AdminModel
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @*<h1>Score Details for Session @Model.token</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <h2>@Model.attributeScores.First().FirstName&nbsp;@Model.attributeScores.First().LastName <small>@Model.attributeScores.First().EmailAddress</small></h2>
+            <hr />
+            <b>Date Assessment Started: </b> @Model.attributeScores.First().DateAssessmentStarted
+            <br />
+            <b>Date Assessment Completed: </b>@Model.attributeScores.First().DateTokenUsed
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Dimensional Scores</h2>
+
+            @{
+                if (Model != null)
+                {
+                    <table class="table table-bordered table-responsive table-hover" id="AssList">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Score</th>
+                                <th>Sign</th>
+                            </tr>
+                        </thead>                       
+                        @foreach (var d in Model.dimensionalBalanceScores)
+                        {
+                        <tbody>
+                            <tr>
+                                <td>@d.Name</td>
+                                <td>@d.Score</td>
+                                <td>@d.Sign</td>
+                            </tr>
+                        </tbody>                           
+                        }
+                    </table>
+                }
+
+            }
+        </div>
+        <div class="col-md-6">
+            <h2>Valuation Scores</h2>
+
+            @{
+                if (Model != null)
+                {
+                    <table class="table table-bordered table-responsive table-hover">
+                        <tr>
+                            <th>Name</th>
+                            <th>Over</th>
+                            <th>Under</th>
+                        </tr>
+                        @foreach (var d in Model.valuationScores)
+                        {
+                            <tr>
+                                <td>@d.Name</td>
+                                <td>@d.over</td>
+                                <td>@d.under</td>
+                            </tr>
+                        }
+                    </table>
+                }
+
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Attribute Scores</h2>
+
+            @{
+                if (Model != null)
+                {
+                    <table class="table table-bordered table-responsive table-hover">
+                        <tr>
+                            <th>Name</th>
+                            <th>Score</th>
+                        </tr>
+                        @foreach (var d in Model.attributeScores)
+                        {
+                            <tr>
+                                <td>@d.Name</td>
+                                <td>@d.Score</td>
+                            </tr>
+                        }
+                    </table>
+                }
+
+            }
+        </div>
+    </div>*@
+
+</div>
+
+

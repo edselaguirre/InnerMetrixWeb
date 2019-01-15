@@ -1,0 +1,116 @@
+﻿@model InnerMetrixWeb.ViewModels.InternalVM
+
+@{
+    ViewBag.Title = "Internal Assessment";
+    Layout = "~/Views/Shared/_LandingPage.cshtml";
+}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="container-fluid">
+            <div class="jumbotron" style="font-size: 18px !important">
+                <p class="lead">
+                    Greetings! You have been asked to complete an assessment of your natural strengths and talents.
+                    There are no right or wrong answers on the following assessments, so relax, and answer how you feel.
+                    The information will help us design and develop programs more tailored to your needs.
+                    We appreciate your participation.
+                </p>
+                <p>
+                    The assessment should take between 5 and 10 minutes to complete.
+                </p>
+                <p>
+                    When you have completed the excercise, please return to your schedule.
+                    Again, we appreciate your participation.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="container-fluid">
+            <div class="col-lg-12">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Oracle ID", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon">00</span>
+                                    @Html.EditorFor(model => model.OracleId, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                                    @*@Html.ValidationMessageFor(model => model.OracleId, "", new { @class = "text-danger" })*@
+                                    <span class="input-group-btn">
+                                        <button id="btnCheckOracleId" class="btn btn-default" type="button">
+                                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Username", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @placeholder = "User Id", @readonly = "readonly" } })
+                                @*@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Password", @disabled = "disabled", @autocomplete = "off" } })
+                                @*@Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "John", @readonly = "readonly" } })
+                                @*@Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Doe", @readonly = "readonly" } })
+                                @*@Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+                        <div class="form-group hidden">
+                            @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control", @placeholder = "john.doe@alorica.com", @readonly = "readonly" } })
+                                @*@Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input id="submitbtn" type="submit" value="Start Assessment" class="btn btn-primary btn-md" disabled="disabled" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<div id="wait" style="height:100vh;min-height:100vh;display:none;background-color:white;opacity: 0.5;width:100%;position:absolute;top:0px;left:0px;text-align:center;padding-top:25%;z-index:99999;">
+    <img src="~/Images/Spinner-1s-200px.gif" />
+</div>
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toastr")
+    @Scripts.Render("~/bundles/common")
+
+}

@@ -1,0 +1,194 @@
+﻿@model InnerMetrixWeb.Models.Config
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Config</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsInternalAllowedBit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsInternalAllowedBit)
+                    @Html.ValidationMessageFor(model => model.IsInternalAllowedBit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @Html.LabelFor(model => model.IsExternalAllowedBit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.IsExternalAllowedBit)
+                    @Html.ValidationMessageFor(model => model.IsExternalAllowedBit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Recepients, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Recepients, new { htmlAttributes = new { @class = "form-control", @style = "display: none" } })
+
+                <div class="input-group">
+                    @Html.TextBox("txtaddrecipient", "", new { @class = "form-control", @type = "email" })
+                    @Html.ValidationMessageFor(model => model.Recepients, "", new { @class = "text-danger" })
+                    <span class="input-group-btn">
+                        <button id="btnAddtoListRecepients" class="btn btn-default" type="button">
+                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+                <ul id='loc'></ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/toastr")
+
+    <script type="text/javascript">
+
+        $(function () {
+            var recstr = $("#Recepients").val();
+            var recarr = recstr.split(";")
+            //console.log(recarr);
+
+            //jQuery.validator.setDefaults({
+            //    debug: true,
+            //    success: "valid"
+            //});
+            //$("form").validate({
+            //    rules: {
+            //        txtaddrecipient: {
+            //            email: true
+            //        }
+            //    },
+            //    messages: {
+            //        txtaddrecipient: "Invalid Email"
+            //    },
+            //    submitHandler: function (form) {
+            //        form.submit();
+            //    }
+            //});
+
+            for (i = 0; i < recarr.length; i++) {
+                //console.log(recarr[i]);
+                $('<li>' + recarr[i] + ' <button class="btn btn-default btnRemoveFromList" type="button"><span class= "glyphicon glyphicon-minus-sign" aria - hidden="true" ></span></button ></li>').appendTo('ul#loc');
+            }
+
+            //console.log($('li').length);
+            var i = $('li').length + 1;
+            /*        console.log(i);  */
+            $('a#add').click(function (e) {
+                e.preventDefault();
+                $('<li>' + i + '</li>').appendTo('ul#loc');
+                i++;
+            });
+
+            $('a#remove').click(function (e) {
+                e.preventDefault();
+                $('li:last').remove('ul#loc');
+                i--;
+            });
+
+            $('#btnAddtoListRecepients').click(function (e) {
+                e.preventDefault();
+                
+                var strConcat = "";
+
+                var $myForm = $('form');
+                console.log($myForm.validate().form());
+
+                if ($myForm.validate().form()) {
+                    // If the form is invalid, submit it. The form won't actually submit;
+                    // this will just cause the browser to display the native HTML5 error messages.
+                    //$myForm.find(':submit').click();
+                    $('<li>' + $("#txtaddrecipient").val() + ' <button class="btn btn-default btnRemoveFromList" type="button"><span class= "glyphicon glyphicon-minus-sign" aria - hidden="true" ></span></button ></li>').appendTo('ul#loc');
+                    $('ul#loc li').each(function (i) {
+                        //console.log($(this));
+                        //console.log($(this)["0"].innerText);
+                        var str = $(this)["0"].innerText;
+                        strConcat = str.trim() + ";" + strConcat.trim();
+                        //console.log(strConcat);
+                        //$(this).attr('rel'); // This is your rel value
+                    });
+                    $("#Recepients").val(strConcat.trim());
+                    console.log(strConcat);
+                    console.log($("#Recepients").val());
+                    $("#txtaddrecipient").val("");
+                } else {
+                    toastr.error("Please check email address!");
+                }
+
+
+
+            });
+
+            //$('.btnRemoveFromList').click(function (e) {
+            //    e.preventDefault();
+            //    $(this).closest('li').remove();
+            //});
+
+            $(document).on('click', '.btnRemoveFromList', function (e) {
+                e.preventDefault();
+                var strConcat = "";
+                $(this).closest('li').remove();
+
+                $('ul#loc li').each(function (i) {
+                    //console.log($(this));
+                    //console.log($(this)["0"].innerText);
+                    var str = $(this)["0"].innerText;
+                    strConcat = str.trim() + ";" + strConcat.trim();
+                    //console.log(strConcat);
+                    //$(this).attr('rel'); // This is your rel value
+                });
+
+                $("#Recepients").val(strConcat.trim());
+                console.log(strConcat);
+                console.log($("#Recepients").val());
+            });
+
+            //$(document).on('blur', '#txtaddrecipient', function (e) {
+            //    var txtemail = $('#txtaddrecipient').val();
+            //    if (validateEmail(txtemail)) {
+            //        alert("Invalid Email.1");
+
+            //    } else {
+            //        alert("Invalid Email.2");
+            //        //alert("Invalid Email.");
+
+            //    }
+            //});
+
+            @*$(function validateEmail(sEmail) {
+                var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if (filter.test(sEmail)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });*@
+
+        });
+
+    </script>
+}

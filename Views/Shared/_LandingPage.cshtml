@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>@Page.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jumbotron")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("head", required: false)
+    <style>
+        body {
+            padding-bottom: 90px
+        }
+
+        .col-centered {
+            float: none;
+            margin: 0 auto;
+        }
+    </style>
+    <script type="text/javascript">
+        var config = {
+            contextPath: @Url.Content("~")
+        };
+    </script>
+
+    
+</head>
+<body>
+    <div class="container">
+        <center>
+            <img src="@Url.Content("~/Content/logo.png")" width="50%" height="50%" style="display:inline-block;" />
+        </center>
+    </div>
+    <hr />
+    <br />
+    <div class="container-fluid">
+        <div class="col-lg-12">
+            @RenderBody()
+        </div>
+    </div>
+    <nav class="navbar navbar-fixed-bottom" style="background-color: #58595b;margin-bottom: 0px !important; padding: 20px 0 20px 0;border-radius: 0px">
+        <div class="container">
+            <center>
+                <img src="@Url.Content("~/Content/assets/alorica-footer.png")" style="display:inline-block;" width="156px" />
+                <br />
+                <h6 class="text-center" style="color: white">&copy; @DateTime.Now.Year - Alorica</h6>
+            </center>
+        </div>
+    </nav>
+    @*<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

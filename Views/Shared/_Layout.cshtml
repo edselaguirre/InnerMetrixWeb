@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Alorica</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Datatables/styles")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/datatables")
+    <style>
+        body {
+            padding: 0px
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" style="background-color : #f38027;margin-bottom: 0px !important; padding: 20px 0 20px 0;border-radius: 0px">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand" style="padding: 0px !important">
+                    <img src="@Url.Content("~/Content/assets/alorica-top.png")" style="display:inline-block;width:156px;" />
+                </span>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @*<li>@Html.ActionLink("Start Assessment", "Internal", "Home", new { Area = "" })</li>*@
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Logout", "Logout", "Login", new { }, new { @class = "btn btn-default navbar-right", @style = "background:transparent; margin-top: 8px; color: white" })
+                    <p class="nav navbar-text navbar-right" style="margin-right: 10px; color:white">Hello, @ViewBag.UserName</p> @**@
+                }
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <nav class="navbar" style="background-color: #58595b;margin-bottom: 0px !important; padding: 20px 0 20px 0;border-radius: 0px">
+        <div class="container">
+            <center>
+                <img src="@Url.Content("~/Content/assets/alorica-footer.png")" style="display:inline-block;width:156px;"  />
+                <br />
+                <h6 class="text-center" style="color: white">&copy; @DateTime.Now.Year - Alorica</h6>
+            </center>
+        </div>
+    </nav>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿@model List<InnerMetrixWeb.Models.GetGuestInfoScore_Result>
+
+
+@{
+    ViewBag.Title = "Assessment List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @*<h2>Assessment Tracker</h2>
+            <hr />*@
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <button id="btnModal" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" onclick="return false">Extract Report</button>
+            </div>
+        </div>
+        <br />
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Use the <b>Download Result</b> button to extract the candidate's assessment result in PDF format
+        </div>
+        @if (ViewBag.RemainingTokensPercentage > 30)
+        {
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp;<strong>Number of Remaining Tokens: </strong>@ViewBag.RemainingTokens
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>&nbsp;<strong>Warning: Number of remaining tokens is low!</strong>
+                <br /><br />
+                You only have @ViewBag.RemainingTokens remaining tokens for assessments. <strong>Consider requesting a new batch of tokens in order to avoid disruption of services.</strong>
+            </div>
+        }
+        <hr />
+    </div>
+
+
+    //modal body
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">            
+            <!-- Modal content-->
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Set date for extraction.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Date From:</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Extract</button>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+}
+
+
+
+
+@{
+
+    <table class="table table-bordered table-responsive table-hover responsive" id="tblAssessment">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>First Name </th>
+                <th>Last Name </th>
+                <th>Email Address</th>
+                <th>Oracle ID</th>
+                <th>Assessment Date</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(function () {
+
+        var config = {
+            contextPath: @Url.Content("~")
+        };
+
+        $("#tblAssessment").dataTable({
+            "order": [],
+            "processing": true,
+            "responsive": true,
+            "ajax": config.contextPath + "admin/guestinfoscore/getassessmentlist",
+            "language": {
+                "search": "Search by Oracle ID, Name or Email Address: "
+            },
+            "columns": [
+                { "data": "ScoresUrl" },
+                { "data": "FirstName" },
+                { "data": "LastName" },
+                { "data": "EmailAddress" },
+                { "data": "OracleId" },
+                { "data": "AssessmentDate" }
+            ],
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "sortable": false,
+                    "searchable": false,
+                    "data": "download_link",
+                    "render": function (data, type, row, meta) {
+                        return '<a href="' + data + '" class="btn btn-primary" style="width: 100%"><span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp;Download Result</button>';
+                    }
+                },
+                {
+                    "targets": 5,
+                    "sortable": false,
+                }
+            ]
+        });
+    })
+
+   
+
+</script>

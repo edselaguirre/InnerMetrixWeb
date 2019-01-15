@@ -1,0 +1,53 @@
+﻿@model InnerMetrixWeb.Models.Guest
+@using InnerMetrixWeb.Services;
+@*@using InnerMetrixWeb.Helper;*@
+@{
+    ViewBag.Title = "Alorica Assessment Tool";
+    /*"EA004535379" "RM004535383" "BT004514198"*/
+    //GuestService guestService = new GuestService();
+    //guestService.GetUserInfo("4535383", "robertryan.mallare");
+    //guestService.GetDomainUserInfo("BT004514198");
+    //DomainHelper guestService = new DomainHelper("BT004514198");
+    //@guestService.CurrentUser - @guestService.EmailAddress - @guestService.EmployeeId
+}
+
+<div class="jumbotron">
+    @{
+        if (Model.OracleId == null)
+        {
+            <h5>You may start your assessment here! - @Html.ActionLink("Start Assess", "StartAssess", "Home")</h5>
+        }
+        else
+        {
+            <h2>Welcome! @Html.DisplayFor(model => model.FirstName) @Html.DisplayFor(model => model.LastName)</h2>
+            <h4>@Html.DisplayFor(model => model.OracleId)</h4>
+            <h4>@Html.DisplayFor(model => model.EmailAddress)</h4>
+        }
+    }
+
+    @*<h1>ASP.NET </h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+</div>
+
+<div class="row">
+    @*<div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Get more libraries</h2>
+            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>*@
+</div>
